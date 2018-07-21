@@ -1,1 +1,1 @@
-# cips-converter-pp
+# uwp photo converter based on cips2ed book
