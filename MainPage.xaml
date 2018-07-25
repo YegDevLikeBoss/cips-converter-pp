@@ -7,53 +7,62 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
-
-    <Grid x:Name="MainGrid" Background="Transparent" HorizontalAlignment="Stretch" Height="75" Grid.Row="1" VerticalAlignment="Top">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="95"/>
-            <ColumnDefinition Width="90"/>
-            <ColumnDefinition Width="90"/>
-            <ColumnDefinition Width="90"/>
-        </Grid.ColumnDefinitions>
-        <Button Content="File" Grid.Column="0" Margin="10,33,0,0" Width="80" Height="32.8" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Button.Flyout>
-                <MenuFlyout>
-                    <MenuFlyoutItem Text="New">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE109;"/>
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Open">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE15;"/>
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Save">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE105;"/>
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Import">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE150;"/>
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Export">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE118;"/>
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Close">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE10A;"/>
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                </MenuFlyout>
-            </Button.Flyout>
-        </Button>
-        <Button Content="Options" Grid.Column="1" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="Canvas" Grid.Column="2" Width="80" Margin="4.4,33,0,0" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+ 
+    <Grid x:Name="All" Background="Transparent" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+     
+        <Grid x:Name="Menu" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="95"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="90"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="File" Grid.Column="0" Margin="10,33,0,0" Width="80" Height="32.8" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="New">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE109;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Open">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE15;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Save">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE105;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Import">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE150;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Export">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE118;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Close">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE10A;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+            <Button Content="Options" Grid.Column="1" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Content="Canvas" Grid.Column="2" Width="80" Margin="4.4,33,0,0" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </Grid>
+        <Grid x:Name="Body" Grid.Row="1" Background="Black">
+        </Grid>
     </Grid>
 </Page>
