@@ -44,11 +44,17 @@ MainPage::MainPage()
 
 void uwpcpp::MainPage::Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+	
+}
+
+
+void uwpcpp::MainPage::MenuImport_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
 	Pickers::FileOpenPicker^ fileOpenPicker = ref new Pickers::FileOpenPicker();
 	fileOpenPicker->SuggestedStartLocation = Pickers::PickerLocationId::Desktop;
 	fileOpenPicker->FileTypeFilter->Append(".jpg");
 	fileOpenPicker->ViewMode = Pickers::PickerViewMode::Thumbnail;
-	
+
 	create_task(fileOpenPicker->PickSingleFileAsync()).then([this](Windows::Storage::StorageFile^ inputFile)
 	{
 		if (nullptr == inputFile)
