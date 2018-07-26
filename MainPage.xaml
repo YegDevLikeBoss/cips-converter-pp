@@ -7,13 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}">
- 
+
     <Grid x:Name="All" Background="Transparent" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-     
+
         <Grid x:Name="Menu" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="48"/>
@@ -21,9 +21,14 @@
                 <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Width="48" Height="48" Click="Button_Click">
-             
+            <Button x:Name="ListV" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Width="48" Height="48" Click="Button_Click">
+
             </Button>
             <Button Content="File" Grid.Column="1" Margin="10,33,0,0" Width="80" Height="32.8" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Button.Flyout>
@@ -44,7 +49,7 @@
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Import">
+                        <MenuFlyoutItem x:Name="MenuImport" Text="Import" Click="MenuImport_Click">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE150;"/>
                             </MenuFlyoutItem.Icon>
@@ -63,36 +68,51 @@
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
-            <Button Content="Options" Grid.Column="2" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Button Content="Canvas" Grid.Column="3" Width="80" Margin="4.4,33,0,0" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Content="Edit" Grid.Column="2" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Content="View" Grid.Column="3" Width="80" Margin="4.4,33,0,0" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Content="Canvas" Grid.Column="4" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Content="Filters" Grid.Column="5" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Content="none" Grid.Column="6" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+            <Button Content="Options" Grid.Column="7" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+            <Button Content="Options" Grid.Column="8" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+            <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" Grid.Column="9" Margin="0,33,10,0" Width="46" VerticalContentAlignment="Bottom" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32.8"/>
         </Grid>
         <Grid x:Name="Body" Grid.Row="1" Background="Transparent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <SplitView x:Name="Main"
+            <SplitView x:Name="MainList"
                        Grid.Column="0"
-                       PaneBackground="Transparent"
+                       PaneBackground="{ThemeResource SystemControlAcrylicElementMediumHighBrush}"
                        IsPaneOpen="False"
                        OpenPaneLength="256"
                        CompactPaneLength="48"
-                       DisplayMode="CompactInline">
+                       DisplayMode="CompactOverlay">
                 <SplitView.Pane>
-                    <TextBlock Text="Pane"
-                   FontSize="24"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+                    <Grid>
+                        <!--<ListView ItemsSource="{x:Bind Groups}"
+                        ItemTemplate="{StaticResource IconTextTemplate}"
+                        IsItemClickEnabled="False"
+                        IsSwipeEnabled="False"
+                        CanDragItems="False"
+                        SelectionMode="Single" />-->
+                    </Grid>
                 </SplitView.Pane>
-
                 <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                     <TextBlock Text="Content"
                    FontSize="24"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"/>
+                    <Rectangle Fill="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" Height="50" Width="50" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    </Rectangle>
                 </Grid>
 
             </SplitView>
+            <Grid Grid.Column="1"
+                  >
+            </Grid>
         </Grid>
+
     </Grid>
 </Page>

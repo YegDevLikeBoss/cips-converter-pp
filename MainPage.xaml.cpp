@@ -21,6 +21,10 @@ using namespace Windows::UI::Xaml::Navigation;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::Storage; //AM for picking files
 using namespace concurrency; //creating tasks
+using namespace Windows::Graphics::Imaging;
+using namespace Windows::Storage::Pickers;
+using namespace Windows::UI;
+using namespace Windows::UI::ViewManagement;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -29,8 +33,8 @@ MainPage::MainPage()
 {
 	InitializeComponent();
 
-	//auto coreTitleBar = CoreApplication::GetCurrentView();
-	//coreTitleBar->TitleBar->ExtendViewIntoTitleBar = true;
+	auto coreTitleBar = CoreApplication::GetCurrentView();
+	coreTitleBar->TitleBar->ExtendViewIntoTitleBar = true;
 	//ApplicationPageBackgroundThemeBrush
 	//remove the solid-colored backgrounds behind the caption controls and system back button
 	//ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
@@ -44,7 +48,7 @@ MainPage::MainPage()
 
 void uwpcpp::MainPage::Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	
+	MainList->IsPaneOpen = true;
 }
 
 
@@ -60,4 +64,15 @@ void uwpcpp::MainPage::MenuImport_Click(Platform::Object^ sender, Windows::UI::X
 		if (nullptr == inputFile)
 			return;
 	});
+	
+	/*SoftwareBitmap softwareBitmap;
+
+	using (IRandomAccessStream stream = await inputFile.OpenAsync(FileAccessMode.Read))
+	{
+		// Create the decoder from the stream
+		BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
+
+		// Get the SoftwareBitmap representation of the file
+		softwareBitmap = await decoder.GetSoftwareBitmapAsync();
+	}*/
 }
