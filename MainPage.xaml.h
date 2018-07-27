@@ -20,5 +20,8 @@ namespace uwpcpp
 	private:
 		void Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void MenuImport_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void SideR_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void SideR_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void SideR_Unchecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 	};
 }

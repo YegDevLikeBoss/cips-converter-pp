@@ -76,3 +76,27 @@ void uwpcpp::MainPage::MenuImport_Click(Platform::Object^ sender, Windows::UI::X
 		softwareBitmap = await decoder.GetSoftwareBitmapAsync();
 	}*/
 }
+
+
+void uwpcpp::MainPage::SideR_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (!ToolPane->Width) {
+		ToolPane->Width = 256;
+		SideR->Content = "&#xE711;";
+	}
+	else {
+		ToolPane->Width = 0;
+		SideR->Content = "&#xE830;";
+	}
+}
+
+void uwpcpp::MainPage::SideR_Checked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	//RightPane->Width = 256 + 48;
+}
+
+
+void uwpcpp::MainPage::SideR_Unchecked(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	//RightPane->Width = 48;
+}
