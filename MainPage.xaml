@@ -26,10 +26,10 @@
                 <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="48"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="ListV" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Width="48" Height="48" Click="Button_Click">
-
-            </Button>
+            <Button x:Name="SideL" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Width="48" Height="48" Click="Button_Click"/>
+            <ToggleButton x:Name="SideR" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" Grid.Column="10" HorizontalAlignment="Center" VerticalAlignment="Top" Width="48" Height="48" Margin="0,32,0,0" Click="SideR_Click" Unchecked="SideR_Unchecked" Checked="SideR_Checked"/>
             <Button Content="File" Grid.Column="1" Margin="10,33,0,0" Width="80" Height="32.8" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Button.Flyout>
                     <MenuFlyout>
@@ -75,20 +75,33 @@
             <Button Content="none" Grid.Column="6" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
             <Button Content="Options" Grid.Column="7" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
             <Button Content="Options" Grid.Column="8" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
-            <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" Grid.Column="9" Margin="0,33,10,0" Width="46" VerticalContentAlignment="Bottom" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32.8"/>
+            <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" Grid.Column="9" Margin="0,33,89,0" Width="46" VerticalContentAlignment="Bottom" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32.8"/>
         </Grid>
         <Grid x:Name="Body" Grid.Row="1" Background="Transparent">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition x:Name="RightPane" Width="auto" MinWidth="0"/>
             </Grid.ColumnDefinitions>
-            <SplitView x:Name="MainList"
-                       Grid.Column="0"
+            <!--<SplitView x:Name="SidePane"
                        PaneBackground="{ThemeResource SystemControlAcrylicElementMediumHighBrush}"
                        IsPaneOpen="False"
                        OpenPaneLength="256"
                        CompactPaneLength="48"
-                       DisplayMode="CompactOverlay">
+                       DisplayMode="CompactInline"
+                       Grid.Column="1"
+                       PanePlacement="Right">
+                <SplitView.Pane>
+                    <Grid>
+                    </Grid>
+                </SplitView.Pane>
+            </SplitView>-->
+            <SplitView x:Name="MainList"
+                       PaneBackground="{ThemeResource SystemControlAcrylicElementMediumHighBrush}"
+                       IsPaneOpen="False"
+                       OpenPaneLength="256"
+                       CompactPaneLength="48"
+                       DisplayMode="CompactOverlay"
+                       Grid.Column="0">
                 <SplitView.Pane>
                     <Grid>
                         <!--<ListView ItemsSource="{x:Bind Groups}"
@@ -104,7 +117,9 @@
                    FontSize="24"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"/>
-                    <Rectangle Fill="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" Height="50" Width="50" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Rectangle Fill="Red" Height="50" Width="50" Margin="0,0,236,32" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    </Rectangle>
+                    <Rectangle x:Name="ToolPane" Fill="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" Height="auto" Width="256" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,10,10,10">
                     </Rectangle>
                 </Grid>
 
