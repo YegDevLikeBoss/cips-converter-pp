@@ -28,9 +28,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="48"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="SideL" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Width="48" Height="48" Click="Button_Click"/>
+            <AppBarButton Style="{ThemeResource AppBarButtonRevealStyle}" x:Name="SideL" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Width="48" Height="48" Click="Button_Click"/>
             <ToggleButton x:Name="SideR" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" Grid.Column="10" HorizontalAlignment="Center" VerticalAlignment="Top" Width="48" Height="48" Margin="0,32,0,0" Click="SideR_Click" Unchecked="SideR_Unchecked" Checked="SideR_Checked"/>
-            <Button Content="File" Grid.Column="1" Margin="10,33,0,0" Width="80" Height="32.8" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button Style="{StaticResource ButtonRevealStyle}" Content="File" Grid.Column="1" Margin="10,33,0,0" Width="80" Height="32.8" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Button.Flyout>
                     <MenuFlyout>
                         <MenuFlyoutItem Text="New">
@@ -46,6 +46,11 @@
                         <MenuFlyoutItem Text="Save">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE105;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Save As">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE792;"/>
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator/>
@@ -68,13 +73,13 @@
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
-            <Button Content="Edit" Grid.Column="2" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Button Content="View" Grid.Column="3" Width="80" Margin="4.4,33,0,0" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Button Content="Canvas" Grid.Column="4" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Button Content="Filters" Grid.Column="5" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Button Content="none" Grid.Column="6" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
-            <Button Content="Options" Grid.Column="7" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
-            <Button Content="Options" Grid.Column="8" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+            <Button Style="{StaticResource ButtonRevealStyle}" Content="Edit" Grid.Column="2" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Style="{StaticResource ButtonRevealStyle}" Content="View" Grid.Column="3" Width="80" Margin="4.4,33,0,0" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Style="{StaticResource ButtonRevealStyle}" Content="Canvas" Grid.Column="4" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Style="{StaticResource ButtonRevealStyle}" Content="Filters" Grid.Column="5" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Style="{StaticResource ButtonRevealStyle}" Content="none" Grid.Column="6" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+            <Button Style="{StaticResource ButtonRevealStyle}" Content="Options" Grid.Column="7" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
+            <Button Style="{StaticResource ButtonRevealStyle}" Content="Options" Grid.Column="8" Margin="5.8,33,0,0" Width="80" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"/>
             <Button FontFamily="Segoe MDL2 Assets" Content="&#xE713;" Grid.Column="9" Margin="0,33,89,0" Width="46" VerticalContentAlignment="Bottom" HorizontalAlignment="Right" VerticalAlignment="Top" Height="32.8"/>
         </Grid>
         <Grid x:Name="Body" Grid.Row="1" Background="Transparent">
@@ -119,8 +124,12 @@
                    HorizontalAlignment="Center"/>
                     <Rectangle Fill="Red" Height="50" Width="50" Margin="0,0,236,32" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                     </Rectangle>
-                    <Rectangle x:Name="ToolPane" Fill="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" Height="auto" Width="256" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,10,10,10">
-                    </Rectangle>
+                    <Grid x:Name="ToolPane" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}" Height="auto" Width="256" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,10,10,10">
+                        <AppBarButton Style="{ThemeResource AppBarButtonRevealStyle}" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48"/>
+                        <AppBarButton Style="{ThemeResource AppBarButtonRevealStyle}" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48"/>
+                        <AppBarButton Style="{ThemeResource AppBarButtonRevealStyle}" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48"/>
+                        <AppBarButton Style="{ThemeResource AppBarButtonRevealStyle}" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48" Margin="46,0,0,0"/>
+                    </Grid>
                 </Grid>
 
             </SplitView>
