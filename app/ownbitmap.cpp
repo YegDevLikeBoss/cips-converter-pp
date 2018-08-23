@@ -2,47 +2,51 @@
 Copyright (c) Artyom Yeghoyan 2018
 */
 #include <iostream>
-#include <bitset>
+//#include <bitset> //Debugging purpose
 #include "lodepng.h"
 #include "bmpdecoder.h"
 
 namespace app{
-	// pixel
-	struct Pixel
+	struct Pixel //16 bit per channel bitmap pixel structure (8 used)
 	{
 		unsigned short red;
 		unsigned short green;
 		unsigned short blue;
 		unsigned short alpha;
 	};
-	//bitmap
-	struct Bitmap
+	struct Bitmap //16 bit per pixel (8 used) bitmap
 	{
-		int x;
-		int y;
+		int x; //width
+		int y; //height
 		Pixel** bitmap;
 	};
-	//vector to bitmap conversion
-	void vector2Bitmap(std::vector<unsigned char> *image, Pixel** bitmap, int x, int y)
+
+	//lodepng provided std::vector<unsigned char> bitmap to Bitmap::Pixel** converting function
+	void vector2Bitmap(
+		std::vector<unsigned char> *image, //convert from
+		Pixel** bitmap, //convert to
+		int x, //width
+		int y //height )
 	{
-		unsigned char* array = image->data();
-		std::cout << image->size() << ' ';
-		for (int i = 0; i < image->size(); i+=4)
+		unsigned char* array = image->data(); //Copy vector to array for conversion
+		//std::cout << image->size() << ' '; //Debugging purpose
+		for (int i = 0; i < image->size(); i += 4 )
 		{
 			//std::cout<<i/4%x<<'-'<<i/4/x<<' '; //Outputs array dimensions for debugging
-			bitmap[ i / 4 % x ][ i / 4 / x ].red = array[i];
-			bitmap[ i / 4 % x ][ i / 4 / x ].green = array[i+1];
-			bitmap[ i / 4 % x ][ i / 4 / x ].blue = array[i+2];
-			bitmap[ i / 4 % x ][ i / 4 / x ].alpha = array[i+3];
+			bitmap[ i / 4 % x ][ i / 4 / x ].red = array[ i ]; //R
+			bitmap[ i / 4 % x ][ i / 4 / x ].green = array[ i + 1 ]; //G
+			bitmap[ i / 4 % x ][ i / 4 / x ].blue = array[ i + 2 ]; //B
+			bitmap[ i / 4 % x ][ i / 4 / x ].alpha = array[ i + 3 ]; //A
 			//std::bitset<8> bn(array[i+2]);  //Outputs vector contents in binary for debugging
 			//std::cout << bn;
 		}
-		std::cout << "end of function\n";
+		//std::cout << "end of function\n"; //Debugging purpose
 	}
 }
 
 int main(int argc, char *argv[])
 {
+	//Following 16 lines of code are provided under license from "bmpdecoder.h" file
 	if(argc < 2)
 	{
 		std::cout << "Please provice input BMP file name" << std::endl;
@@ -60,60 +64,52 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 	
-	//bitmap declaration
-	app::Bitmap bitmap;
+	app::Bitmap bitmap; //Bitmap declaration
 	
-	//bitmap size
-	/*std::cout << "size";
-	std::cin >>bitmap.x;
-	std::cin >>bitmap.y;*/
+	//Assigning bitmap size
 	bitmap.x = w;
 	bitmap.y = h;
 	
-	//bitmap allocation
-	bitmap.bitmap = new app::Pixel*[bitmap.x];
-	
+	//Bitmap allocation
+	bitmap.bitmap = new app::Pixel*[bitmap.x];	
 	for (int i = 0; i < bitmap.x; i++)
 	{
 		bitmap.bitmap[i] = new app::Pixel[bitmap.y];
 	}
 	
-	
-	
-	//processing bitmap
-	
-	app::vector2Bitmap(&image, bitmap.bitmap, bitmap.x, bitmap.y);
+	//Vector to bitmap conversion
+	app::vector2Bitmap(
+		&image,
+		bitmap.bitmap,
+		bitmap.x,
+		bitmap.y );
 
+	//At this point you can freely modify bitmap structure
 	
+	//Blank white bitmap definition (for future)
 	/*for (int i = 0; i < bitmap.x; i++)
-		for (int j = 0; j < bitmap.y; j++)
-		{
-			bitmap.bitmap[i][j].red = bitmap.bitmap[i][j].green = bitmap.bitmap[i][j].alpha = 0;
-			bitmap.bitmap[i][j].blue = 255;
-		}*/
+			for (int j = 0; j < bitmap.y; j++)
+			{
+				bitmap.bitmap[i][j].red = bitmap.bitmap[i][j].green = bitmap.bitmap[i][j].blue = bitmap.bitmap[i][j].alpha = 255;
+			}*/
 	
-	for (int i = 0; i < bitmap.y; i++)
-	{
-		for (int j = 0; j < bitmap.x; j++)
-		{
+	std::cout<<"RED\n"; //Red channel output for debugging
+	for (int i = 0; i < bitmap.y; i++) {
+		for (int j = 0; j < bitmap.x; j++) {
 			std::cout << bitmap.bitmap[j][i].red << ' ';
 		}
 		std::cout << std::endl;
 	}
 	
-	std::cout<<"    g    \n";
-	
-	for (int i = 0; i < bitmap.y; i++)
-	{
-		for (int j = 0; j < bitmap.x; j++)
-		{
+	std::cout<<"GREEN\n"; //Green channel output for debugging
+	for (int i = 0; i < bitmap.y; i++) {
+		for (int j = 0; j < bitmap.x; j++) {
 			std::cout << bitmap.bitmap[j][i].green << ' ';
 		}
 		std::cout << std::endl;
 	}
 	
-	std::cout<<"    b    \n";
-	
+	std::cout<<"BLUE\n"; //Blue channel output for debugging
 	for (int i = 0; i < bitmap.y; i++)
 	{
 		for (int j = 0; j < bitmap.x; j++)
@@ -123,7 +119,11 @@ int main(int argc, char *argv[])
 		std::cout << std::endl;
 	}
 	
-	//bitmap deallocation
+	//End of modification
+	
+	//There will be PNG output in future, but at this point all modifications will be lost
+	
+	//Bitmap deallocation
 	for (int i = 0; i < bitmap.x; i++)
 	{
 		delete [] bitmap.bitmap[i];
