@@ -5,67 +5,46 @@
 #include <sstream>
 #include <string>
 namespace ping {
+
 struct Chunk {
-	unsigned long int size;
-	const char* name;
-	char* content;
-	char crc32[4];
+	unsigned long size;           // Size of chunk
+	const char* name;            // Name of chunk
+	unsigned char* content; // Data of chunk
+	unsigned long crc32;       // CRC32 for chunk
 	
 	Chunk( 
-		unsigned long int getSize,
-		const char* getName
-		) 
-	{
-		size = getSize;
-		name = getName;
-	}
-	
-	const char* getN() //test for chunk name
-	{
-		return name;
-	}
-	
-	unsigned long int getSize_int()
-	{
-		return size; //test for chunk size
-	}
-	
-	std::string getSize_char() // Convert integer size to file-ready char array
-	{
-		/*unsigned char tempArray[4];
-		unsigned long int tempSize = size;*/
-		/*
-		
-		unsigned short int temp;
-		
-		for ( int i = 0; i < 4; i++ )
-		{
-			temp = tempSize % 255;
-			tempSize /= 255;
-			
-			tempArray[ 3 - i ] = temp;
-		}*/
-		/*int i = 0;
+		unsigned long getSize,
+		const char * getName
+		) ;
 
-    		for (i = 0; i < 4; ++i)
-    		{
-        		tempArray[i] = (unsigned char)((((unsigned long) tempSize) >> (24 - (8*i))) & 0xFFu);
-    		}
-	
-		return tempArray;*/
-		/*std::string str;
-		str = std::to_string(size);*/
-		std::stringstream stream;
-		stream << "0x" << std::setfill ('0') << std::setw(sizeof(unsigned long)*2) << std::hex << size;
-		std::string str( stream.str() );
-		
-		return str;
-	}
+	unsigned long getCrc32();               // Return CRC32 value
+	void setCrc32(unsigned long arg); // Set CRC32 value	
+	const char* getName();                   //test for chunk name
+	unsigned long getSizeInt();             // Numerical representation of chunk size
+	std::string getSizeChar();                 // Hex representation of chunk size
 	
 };
+
 //critical chunks
 struct IHDR : Chunk { // Head chunk
-	IHDR() : Chunk( 13, "IHDR" ) {} //cant send 0000000d
+	IHDR() : Chunk( 0x0000000dL , "IHDR" ) {}
+	
+	void createContent(unsigned long x, unsigned long y)
+	{
+		content[0] = 0x00;
+		content[1] = 0x00;
+		content[2] = 0x00;
+		content[3] = 0x64;
+		content[4] = 0x00;
+		content[5] = 0x00;
+		content[6] = 0x00;
+		content[7] = 0x64;
+		content[8] = 0x08;
+		content[9] = 0x02;
+		content[10] = 0x00;
+		content[11] = 0x00;
+		content[12] = 0x00;
+	}
 };
 /*struct PLTE : Chunk { // Palette chunk
 	PLTE() : Chunk("PLTE") {}
@@ -93,5 +72,8 @@ struct IEND : Chunk { // End chunk
 // tIME chunk
 
 // sTER chunk
+
+unsigned long calcCrc(unsigned long *CrcTable, unsigned long crc, unsigned char *buf, int len);
+
 }
 #endif
