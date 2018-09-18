@@ -1,16 +1,24 @@
-#include <iostream>
-#include <fstream>
 #include "ping.h"
 
 // Constructor
 ping::Chunk::Chunk( 
 		unsigned long getSize,
-		const char * getName
+		unsigned long getName
 		) 
 {
 	size = getSize;
-	name = getName;
-	content = new unsigned char[size];
+	int j = 0x1000000; // Converting hex long to char bytes
+	for ( int i = 0; i < 4; i++ )
+	{
+		name[i] = getName / j;
+		j /= 0x100;
+	}
+	content = new char[size];
+}
+
+ping::Chunk::~Chunk()
+{
+	delete [] content;
 }
 
 // Getters
@@ -33,9 +41,24 @@ std::string ping::Chunk::getSizeChar() // Convert integer size to file-ready cha
 	return str;
 }
 
-const char* ping::Chunk::getName() //test for chunk name
+char * ping::Chunk::getName() //test for chunk name
 {
 	return name;
+}
+
+char* ping::Chunk::getContent() const
+{
+	return content;
+}
+
+unsigned char * ping::Chunk::getNameAndContent()
+{
+	unsigned char * result = new unsigned char[size + 4];
+	for ( int i = 0; i < 4; i++ )
+		result[i] = name[i];
+	for ( int i = 4; i < size; i++ )
+		result[i] = content[i];
+	return result;
 }
 
 // Setters
@@ -45,7 +68,7 @@ void ping::Chunk::setCrc32(unsigned long arg)
 }
 
 //CRC32 calc
-unsigned long ping::calcCrc(unsigned long *CrcTable, unsigned long crc, unsigned char *buf, int len)
+unsigned long ping::calcCrc(unsigned long *CrcTable, unsigned long crc, char *buf, int len)
 {
 	unsigned long crc32 = crc;
 	int n;

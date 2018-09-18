@@ -7,29 +7,82 @@
 namespace ping {
 
 struct Chunk {
+protected:
 	unsigned long size;           // Size of chunk
-	const char* name;            // Name of chunk
-	unsigned char* content; // Data of chunk
+	char name[4];  // Name of chunk
+	mutable char* content; // Data of chunk
 	unsigned long crc32;       // CRC32 for chunk
-	
-	Chunk( 
+public:
+	Chunk(
 		unsigned long getSize,
-		const char * getName
+		unsigned long getName
 		) ;
+		
+	~Chunk();
 
 	unsigned long getCrc32();               // Return CRC32 value
 	void setCrc32(unsigned long arg); // Set CRC32 value	
-	const char* getName();                   //test for chunk name
+	char* getName();            //test for chunk name
+	char* getContent() const;         // Return content
 	unsigned long getSizeInt();             // Numerical representation of chunk size
 	std::string getSizeChar();                 // Hex representation of chunk size
+	unsigned char * getNameAndContent();
+	
 	
 };
 
 //critical chunks
-struct IHDR : Chunk { // Head chunk
-	IHDR() : Chunk( 0x0000000dL , "IHDR" ) {}
+
+// Head chunk
+struct IHDR : Chunk {
+private:
+	unsigned long width;
+	unsigned long height;
+	unsigned char bitDepth;
+	unsigned char colourType;
+	unsigned char compression;
+	unsigned char filter;
+	unsigned char interlace;
+public:
+	// Defaultly create 1x1, 8-bit, no-alpha PNG without Adam7 interlacing
+	IHDR() : Chunk( 0x0000000dL, 0x49484452L )
+	{
+		width = 1;
+		height = 1;
+		bitDepth = 8;
+		colourType = 2;
+		compression = 0;
+		filter = 0;
+		interlace = 0;
+	}
+	// Create <x>x<y>, <bitDepht>-bit, PNG with <interlace> interlacing
+	IHDR( unsigned long x,
+				unsigned long y,
+				unsigned char bitDepth,
+				unsigned char colourType,
+				unsigned char interlace
+				) : Chunk( 0x0000000dL, 0x49484452L )
+	{
+		width = x;
+		height = y;
+		this->bitDepth = bitDepth;
+		this->colourType = colourType;
+		compression = 0;
+		filter = 0;
+		this->interlace = interlace;
+	}
 	
-	void createContent(unsigned long x, unsigned long y)
+	// Send all IHDR fields to base class *content field
+	void writeContent() const
+	{
+		content[8] = bitDepth;
+		content[9] = colourType;
+		content[10] = compression;
+		content[11] = filter;
+		content[12] = interlace;
+	}
+	
+	void createContent() const //WILL BE DELETED
 	{
 		content[0] = 0x00;
 		content[1] = 0x00;
@@ -51,10 +104,12 @@ struct IHDR : Chunk { // Head chunk
 };
 struct IDAT : Chunk { // Data chunk
 	IDAT() : Chunk("IDAT") {}
-};
-struct IEND : Chunk { // End chunk
-	IEND() : Chunk("IEND") {}
 };*/
+// End chunk
+struct IEND : Chunk {
+	// Just create end chunk
+	IEND() : Chunk( 0x00000000L, 0x49454e44L ) {}
+};
 //optional chunksss
 // tRNS chunk
 // cHRM chunk
@@ -73,7 +128,7 @@ struct IEND : Chunk { // End chunk
 
 // sTER chunk
 
-unsigned long calcCrc(unsigned long *CrcTable, unsigned long crc, unsigned char *buf, int len);
+unsigned long calcCrc(unsigned long *CrcTable, unsigned long crc, char *buf, int len);
 
 }
 #endif
