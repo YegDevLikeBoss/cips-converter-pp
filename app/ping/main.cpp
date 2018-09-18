@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
+#include <cstring>
 #include "ping.h"
+#include "transform.h"
 
 void MakeCrcTable();
 
@@ -23,22 +25,40 @@ int main()
 	ping::Chunk** chunk = new ping::Chunk*[1]; //array of chunks
 	chunk[0] = new ping::IHDR();
 	std::cout << "hi"; //debug
-	std::cout << chunk[0]->getSizeInt(); //debug
+	//std::cout << chunk[0]->getName(); //debug
 	
+	// PNG file header
 	const unsigned char header[] = { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, '\0'};
 	
-	//std::cout << header; //debug
+	//TO CHANGE IN FUTURE
+	// Create Transform object for binary file input
+	trans::Transform longNumber;
+	longNumber.LongToCharArr(chunk[0]->getSizeInt());
+	std::cout << chunk[0]->getSizeInt() ;
 	
 	MakeCrcTable();
 	//make ihdr crc
-	chunk[0]->setCrc32(ping::calcCrc( crc_table, 0xffffffffL, chunk[0]->getName(), (chunk[0]->getSizeInt())-9));
+	char * sizePlusContentStr = new char[/*(chunk[0]->getSizeInt())+*/4];
+	std::cout << "2" << longNumber.getArray();
+	strcpy(sizePlusContentStr, longNumber.getArray());
+	std::cout << sizePlusContentStr << "ok";
+	//strcat(sizePlusContentStr, chunk[0]->getContent());
+	chunk[0]->setCrc32(ping::calcCrc( crc_table, 0xffffffffL, chunk[0]->getName(), 4/*(chunk[0]->getSizeInt())+4*/));
+	std::cout << chunk[0]->getCrc32();
 	
 	std::ofstream file;
 	file.open("test.png", std::ios::binary );
-	file << header << chunk[0]->getName() << chunk[0]->getSizeChar() << chunk[0]->getCrc32();
-	//file.write(chunk[0]->getSize_char(), sizeof(char)*chunk[0]->getSize_char().size());
-	file.close();
+	file << header /*<< chunk[0]->getSizeInt() << chunk[0]->getName() *//*<< chunk[0]->getCrc32()*/;
+
+	file.write(longNumber.getArray(), 4);
 	
+	trans::Transform crcLong;
+	crcLong.LongToCharArr(chunk[0]->getCrc32());
+	strcpy(sizePlusContentStr, crcLong.getArray());
+	file.write(sizePlusContentStr, 4);
+	//file.write(chunk[0]->getSizeChar(), sizeof(char)*chunk[0]->getSizeChar().size());
+	file.close();
+	delete [] sizePlusContentStr;
 	return 0;	
 }
 
